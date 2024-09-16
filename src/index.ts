@@ -12,6 +12,7 @@ app.use(express.json());
 
 // Health Check Endpoint
 app.get('/', (req: Request, res: Response) => {
+  console.log('Health Check Endpoint');
   res.send('Puppeteer Markdown Scraper is running.');
 });
 
