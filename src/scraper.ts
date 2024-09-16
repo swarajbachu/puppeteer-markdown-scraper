@@ -14,14 +14,25 @@ export async function scrapeToMarkdown(url: string): Promise<string> {
   }
 
   const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: '/usr/bin/chromium-browser', // Path to system-installed Chromium
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process', // Note: This flag doesn't work in Windows
+      '--disable-gpu',
+    ],
   });
 
   try {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
 
-    // Extract the main content. This might need customization based on the website structure.
+    // Extract the main content. Customize this based on the website structure.
     const content = await page.evaluate(() => {
       // Attempt to select the <article> tag first
       const article = document.querySelector('article');
