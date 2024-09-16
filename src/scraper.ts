@@ -14,6 +14,7 @@ export async function scrapeToMarkdown(url: string): Promise<string> {
   }
 
   const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser', // Path to system-installed Chromium
     headless: true,
     args: [
       '--no-sandbox',
